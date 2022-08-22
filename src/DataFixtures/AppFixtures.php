@@ -23,13 +23,13 @@ class AppFixtures extends Fixture
             ->setNom('Ali')
             ->setAge(27)
             ->setUsername('any-06')
-            ->setEmail('anyou@anyou.com')
+            ->setEmail('any@any.com')
             ->setPassword($this->hasher->hashPassword($user, 'test1234'))
             ->setRoles(["ROLE_ADMIN"])
             ->setVille('Valence');
 
-        $manager->persist($user);
+        // $manager->persist($user);
 
-        $manager->flush();
+        // $manager->flush();
     }
 }
