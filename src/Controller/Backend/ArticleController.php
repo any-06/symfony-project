@@ -13,10 +13,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class Admin Controller
+ * Class Article Controller
  * @Route("/admin")
  */
-class AdminController extends AbstractController
+class ArticleController extends AbstractController
 {
     /**
      * Article Repository to find Article Object

@@ -1,0 +1,44 @@
+{% extends "layout.html.twig" %}
+
+{% block title %}
+	Admin user |
+	{{ parent() }}
+{% endblock %}
+
+{% block body %}
+	<section class="container-fluid mt-4">
+		<h1 class="text-center">Admin des Users</h1>
+
+		<table class="table mt-4">
+			<thead>
+				<tr>
+					<th>Prénom</th>
+					<th>Nom</th>
+					<th>Username</th>
+					<th>Email</th>
+					<th>Âge</th>
+					<th>Rôle</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				{% for user in users %}
+					<tr>
+						<th>{{ user.prenom }}</th>
+						<th>{{ user.nom }}</th>
+						<th>{{ user.username }}</th>
+						<th>{{ user.email }}</th>
+						<th>{{ user.age }}</th>
+						<th>{{ user.roles ? user.roles|json_encode : '' }}</th>
+
+						<td>
+							{% include "Backend/User/_actions.html.twig" %}
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+
+	</section>
+{% endblock %}
