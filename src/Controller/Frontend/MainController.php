@@ -28,14 +28,7 @@ class MainController extends AbstractController
         //Récupère tous les Articles
         $articles = $this->repoArticle->findAll();
 
-        // $data = [
-        //     'nom' => 'Pierre',
-        //     'age' => 25,
-        //     'ville' => 'Chambéry'
-        // ];
-
-        // return $this->render('Home/index.html.twig', ['data' => $data]);
-        return $this->render('Home/index.html.twig', [
+        return $this->render('Frontend/Home/index.html.twig', [
             'articles' => $articles
         ]);
     }
