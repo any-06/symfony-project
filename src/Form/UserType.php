@@ -13,6 +13,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class UserType extends AbstractType
 {
@@ -29,6 +30,12 @@ class UserType extends AbstractType
 
             if ($user === $this->security->getUser()) {
                 $form
+                    ->add('imageFile', VichImageType::class, [
+                        'required' => false,
+                        'download_uri' => false,
+                        'image_uri' => true,
+                        'label' => 'Image : '
+                    ])
                     ->add('username', TextType::class, [
                         'label' => false,
                         'required' => true,

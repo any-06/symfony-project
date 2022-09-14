@@ -6,14 +6,26 @@
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-				<div class="navbar-nav">
-					<a class="nav-link active" aria-current="page" href="{{ path('home')}}">Home</a>
-				</div>
+				<ul class="navbar-nav">
+					<li class="nav-item">
+						<a class="nav-link active" aria-current="page" href="{{path('home')}}">Home</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{{path('admin')}}">Articles</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{{path('admin')}}">News</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{{path('admin')}}">Contact</a>
+					</li>
+				</ul>
 			</div>
 			{% if app.user %}
 				{% if is_granted('ROLE_ADMIN') %}
 					<div class="dropdown">
 						<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+							<i class="bi bi-cloud-haze2-fill"></i>
 							Admin
 						</button>
 						<ul class="dropdown-menu">
