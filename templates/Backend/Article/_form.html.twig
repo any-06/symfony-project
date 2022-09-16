@@ -6,7 +6,15 @@
 
 {{form_row(form.imageFile)}}
 
-{{form_row(form.content)}}
+<div class="mb-3">
+	<label for="article[content]">Contenu:</label>
+	<div id="ckeditor" class="ckeditor-input">
+		{{ form.content.vars.value|raw }}
+	</div>
+
+	{{form_row(form.content)}}
+</div>
+
 
 <div class="text-center">
 	<button type="submit" class="btn btn-dark btn-inline">{{ button_label|default('Save') }}</button>

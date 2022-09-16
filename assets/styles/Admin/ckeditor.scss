@@ -1,0 +1,10 @@
+.ckeditor-input {
+    border-radius: $radius-default;
+    border: 1px solid $grey !important;
+}
+
+.ck.ck-editor__main {
+    max-height: scroll;
+    overflow: scroll;
+
+}

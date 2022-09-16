@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -41,13 +42,7 @@ class ArticleType extends AbstractType
                 'image_uri' => true,
                 'label' => 'Image : '
             ])
-            ->add('content', TextareaType::class, [
-                'label' => 'Contenu :',
-                'required' => true
-            ]);
-        // ->add('save', SubmitType::class, [
-        //     'label' => 'CRÉER',
-        // ]);
+            ->add('content', HiddenType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
