@@ -26,10 +26,11 @@ class AppFixtures extends Fixture
             ->setEmail('any@any.com')
             ->setPassword($this->hasher->hashPassword($user, 'test1234'))
             ->setRoles(["ROLE_ADMIN"])
-            ->setVille('Valence');
+            ->setVille('Valence')
+            ->setAdresse('15 Rue des platanes');
 
-        // $manager->persist($user);
+        $manager->persist($user);
 
-        // $manager->flush();
+        $manager->flush();
     }
 }

@@ -1,6 +1,5 @@
 {{ form_start(form) }}
 
-
 {% if form.prenom is defined and form.nom is defined and form.username is defined and form.age is defined and form.email is defined and form.ville is defined and form.imageFile is defined %}
 	<div class="row">
 		<div class="col-md-6">
@@ -23,11 +22,22 @@
 	</div>
 
 	{{ form_row(form.email) }}
-	{{ form_row(form.ville) }}
+	{{ form_row(form.adresse) }}
+
+	<div class="row">
+		<div class="col-md-8">
+			{{ form_row(form.ville) }}
+		</div>
+		<div class="col-md-4">
+			{{ form_row(form.zipCode) }}
+		</div>
+	</div>
 {% endif %}
 
+{% if form.roles is defined %}
+	{{ form_row(form.roles) }}
+{% endif %}
 
-{{ form_row(form.roles) }}
 
 <div class="text-center">
 	<button type="submit" class="btn btn-dark">{{ button_label|default('Save') }}</button>

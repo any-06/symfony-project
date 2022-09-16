@@ -14,7 +14,7 @@
 			</div>
 			{% if app.user %}
 				{% if is_granted('ROLE_ADMIN') %}
-					<div class="dropdown">
+					<div class="dropdown me-2">
 						<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
 							<i class="bi bi-cloud-haze2-fill"></i>
 							Admin
@@ -40,11 +40,23 @@
 				</div>
 			{% endif %}
 			<div class="navbar-btn">
-				<a href="{{ path('logout') }}" class="btn btn-danger">Se déconnecter</a>
+				<a href="{{ path('logout') }}" class="btn btn-danger">
+					<i class="bi bi-box-arrow-in-left"></i>
+					Logout
+				</a>
 			</div>
 		{% else %}
-			<div class="navbar-btn">
-				<a href="{{ path('login') }}" class="btn btn-success">Login</a>
+			<div class="navbar-btn me-2">
+				<a href="{{ path('login') }}" class="btn btn-success">
+					<i class="bi bi-box-arrow-in-right"></i>
+					Login
+				</a>
+			</div>
+			<div class="navbar-btn me-2">
+				<a href="{{ path('register') }}" class="btn btn-success">
+					<i class="bi bi-person-plus"></i>
+					Sign up
+				</a>
 			</div>
 		{% endif %}
 	</div>

@@ -88,6 +88,20 @@ class RegistrationFormType extends AbstractType
                 'attr' => [
                     'placeholder' => 'Votre ville'
                 ],
+            ])
+            ->add('adresse', TextType::class, [
+                'required' => false,
+                'label' => false,
+                'attr' => [
+                    'placeholder' => 'Votre adresse'
+                ],
+            ])
+            ->add('zipCode', TextType::class, [
+                'required' => false,
+                'label' => false,
+                'attr' => [
+                    'placeholder' => 'Code postal'
+                ],
             ]);
     }
 

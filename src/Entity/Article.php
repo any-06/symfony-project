@@ -33,6 +33,10 @@ class Article
     #[Gedmo\Timestampable(on: 'create')]
     private $createdAt;
 
+    #[ORM\Column(length: 260, unique: true)]
+    #[Gedmo\Slug(fields: ['titre'])]
+    private $slug;
+
     #[ORM\ManyToMany(targetEntity: Categorie::class, mappedBy: 'articles')]
     private Collection $categories;
 
@@ -48,6 +52,10 @@ class Article
 
     #[ORM\Column(type: 'datetime', nullable: true)]
     private ?\DateTimeInterface $imageUpdatedAt = null;
+
+    #[ORM\ManyToOne(inversedBy: 'articles')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
 
     public function __construct()
     {
@@ -105,6 +113,11 @@ class Article
         $this->createdAt = $createdAt;
 
         return $this;
+    }
+
+    public function getSlug()
+    {
+        return $this->slug;
     }
 
     /**
@@ -177,5 +190,17 @@ class Article
     public function getImageSize(): ?int
     {
         return $this->imageSize;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
     }
 }
