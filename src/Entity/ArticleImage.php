@@ -2,13 +2,14 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiProperty;
-use App\Repository\ArticleImageRepository;
+use App\Entity\Article;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ArticleImageRepository;
+use ApiPlatform\Core\Annotation\ApiProperty;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Annotation\Groups;
-use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ArticleImageRepository::class)]
 #[Vich\Uploadable]

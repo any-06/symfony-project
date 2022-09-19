@@ -73,7 +73,7 @@ class UserType extends AbstractType
                             'placeholder' => 'Votre ville'
                         ],
                     ])
-                    ->add('adresse', TextType::class, [
+                    ->add('address', TextType::class, [
                         'required' => false,
                         'label' => false,
                         'attr' => [
