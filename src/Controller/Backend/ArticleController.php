@@ -4,7 +4,6 @@ namespace App\Controller\Backend;
 
 use App\Entity\Article;
 use App\Form\ArticleType;
-use App\Repository\UserRepository;
 use App\Repository\ArticleRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
@@ -46,12 +45,12 @@ class ArticleController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             $article->setUser($security->getUser());
 
             $this->repoArticle->add($article, true);
 
             $this->addFlash('success', 'Article créé avec succès !');
-
             return $this->redirectToRoute('admin');
         }
 

@@ -166,7 +166,7 @@ if (form) {
     },
   })
     .then((editor) => {
-      windows.editor = editor;
+      window.editor = editor;
 
       form.addEventListener("submit", (element) => {
         element.preventDefault();
