@@ -1,5 +1,6 @@
-<div class="right-column">
+<div class="right-column mb-3">
 	<article class="article-content">
 		{{ article.content|raw }}
 	</article>
+	{% include "Frontend/Article/_formCommentaires.html.twig" %}
 </div>

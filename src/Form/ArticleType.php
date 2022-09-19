@@ -44,7 +44,7 @@ class ArticleType extends AbstractType
                 'allow_delete' => true,
                 'delete_empty' => true,
                 'prototype' => true,
-                'by_reference' => true,
+                'by_reference' => false,
                 'label' => false,
             ])
             ->add('content', HiddenType::class);

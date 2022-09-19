@@ -34,7 +34,6 @@ class ArticleImage
     private ?string $imageName = null;
 
     #[ORM\JoinColumn(nullable: true)]
-    #[Groups(['image:read', 'article:list'])]
     public ?string $imageUrl = null;
 
     #[ORM\Column]
@@ -89,7 +88,7 @@ class ArticleImage
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTimeImmutable $updatedAt): self
+    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
 
