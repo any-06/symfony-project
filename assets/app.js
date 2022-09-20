@@ -12,6 +12,7 @@ import "./styles/app.scss";
 import "./bootstrap";
 
 import "./js/headerFixed.js";
+import "./js/swiperArticle.js";
 
 // this "modifies" the jquery module: adding behavior to it
 // the bootstrap module doesn't export/return anything
