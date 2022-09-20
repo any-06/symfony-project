@@ -17,13 +17,19 @@ use Symfony\Component\Security\Core\Security;
 class ArticleController extends AbstractController
 {
     #[Route('/details/{slug}', name: 'app.article.details', methods: ['GET', 'POST'])]
-    public function showArticle(?Article $article, Request $request, Security $security, CommentRepository $repoComment): Response|RedirectResponse
-    {
+    public function showArticle(
+        ?Article $article,
+        Request $request,
+        Security $security,
+        CommentRepository $repoComment
+    ): Response|RedirectResponse {
         if (!$article instanceof Article) {
             $this->addFlash('error', 'Article non trouvé');
 
             return $this->redirectToRoute('home');
         }
+
+        $comments = $repoComment->findActiveByArticle($article->getId());
 
         $comment = new Comment();
 
@@ -47,6 +53,7 @@ class ArticleController extends AbstractController
         return $this->renderForm('Frontend/Article/show.html.twig', [
             'article' => $article,
             'form' => $form,
+            'comments' => $comments,
         ]);
     }
 }

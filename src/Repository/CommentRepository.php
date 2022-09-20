@@ -42,8 +42,13 @@ class CommentRepository extends ServiceEntityRepository
     public function findActiveByArticle(int $articleId): array
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.article = :articleId')
-            ->setParameter('articleId', $articleId);
+            ->andWhere('c.article = :id')
+            ->setParameter('id', $articleId)
+            ->andWhere('c.active = :active')
+            ->setParameter('active', true)
+            ->orderBy('c.createdAt', 'DESC')
+            ->getQuery()
+            ->getResult();
     }
 
 
