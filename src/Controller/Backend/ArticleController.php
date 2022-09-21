@@ -3,8 +3,10 @@
 namespace App\Controller\Backend;
 
 use App\Entity\Article;
+use App\Entity\Comment;
 use App\Form\ArticleType;
 use App\Repository\ArticleRepository;
+use App\Repository\CommentRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,7 +18,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ArticleController extends AbstractController
 {
     public function __construct(
-        private ArticleRepository $repoArticle
+        private ArticleRepository $repoArticle,
+        private CommentRepository $repoComment
     ) {
     }
 
@@ -92,5 +95,65 @@ class ArticleController extends AbstractController
         }
 
         return $this->redirectToRoute('admin');
+    }
+
+    #[Route('/article/{slug}/comments', name: 'admin.article.comments', methods: ['GET'])]
+    public function adminComments(?Article $article): Response|RedirectResponse
+    {
+        if (!$article instanceof Article) {
+            $this->addFlash('error', 'Article non trouvé, vérifiez votre url.');
+
+            return $this->redirectToRoute('admin');
+        }
+
+        $comments = $this->repoComment->findByArticle($article->getId());
+
+        if (!$comments) {
+            $this->addFlash('error', 'Aucun commentaire trouvé pour cet article');
+
+            return $this->redirectToRoute('admin');
+        }
+
+        return $this->render('Backend/Comment/index.html.twig', [
+            'comments' => $comments,
+            'article' => $article
+        ]);
+    }
+
+    #[Route('/comments/switch/{id}', name: 'admin.comments.switch', methods: ['GET'])]
+    public function switchVisibilityComment(?Comment $comment): Response
+    {
+        if (!$comment instanceof Comment) {
+            return new Response('Commentaire non trouvé', 404);
+        }
+
+        $comment->setActive(!$comment->isActive());
+        $this->repoComment->add($comment, true);
+
+        return new Response('Visibilité changé avec succès', 201);
+    }
+
+    #[Route('/{id}/comments/delete', name: 'admin.article.comment.delete', methods: ['DELETE', 'POST'])]
+    public function deleteComment(?Comment $comment, Request $request): RedirectResponse
+    {
+        if (!$comment) {
+            $this->addFlash('error', 'Commentaire non trouvé');
+
+            return $this->redirectToRoute('admin');
+        }
+
+        if ($this->isCsrfTokenValid('delete' . $comment->getId(), $request->get('_token'))) {
+            $this->repoComment->remove($comment, true);
+
+            $this->addFlash('success', 'Commentaire supprimé avec succès');
+
+            return $this->redirectToRoute('admin.article.comments', [
+                'slug' => $comment->getArticle()->getSlug(),
+            ]);
+        }
+
+        $this->addFlash('error', "Le token n'est pas valide");
+
+        return $this->redirectToRoute('admin.article.comments');
     }
 }
