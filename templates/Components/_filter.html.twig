@@ -1,4 +1,10 @@
-{{ form_start(form, {'attr': {'class': 'form-filter p-3 card'} }) }}
+{{ form_start(form, {'attr': {'class': 'form-filter p-3 card js-filter-form'} }) }}
+
+<div class="loader">
+	<div class="spinner-grow js-loading" role="status" aria-hidden="true" style="display: none">
+		<span class="visually-hidden">Loading...</span>
+	</div>
+</div>
 
 {{ form_row(form.query) }}
 
@@ -9,7 +15,5 @@
 <h2 class="mb-3">Auteurs:</h2>
 
 {{ form_row(form.auteur, {'attr': {'class': 'd-flex flex-wrap gap-2'} }) }}
-
-<button type="submit" class="btn btn-primary">Filter</button>
 
 {{ form_end(form) }}

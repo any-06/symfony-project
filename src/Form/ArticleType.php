@@ -6,6 +6,7 @@ use App\Entity\Article;
 use App\Entity\Categorie;
 use App\Form\ArticleImageType;
 use Doctrine\ORM\EntityRepository;
+use App\Form\CategorieAutocompleteField;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Vich\UploaderBundle\Form\Type\VichImageType;
@@ -26,17 +27,8 @@ class ArticleType extends AbstractType
                 'label' => 'Titre :',
                 'required' => true
             ])
-            ->add('categories', EntityType::class, [
-                'class' => Categorie::class,
-                'query_builder' => function (EntityRepository $er) {
-                    return $er->createQueryBuilder('c')
-                        ->andWhere('c.enable = true')
-                        ->orderBy('c.titre', 'ASC');
-                },
+            ->add('categories', CategorieAutocompleteField::class, [
                 'label' => 'Catégories :',
-                'choice_label' => 'titre',
-                'multiple' => true,
-                'by_reference' => false
             ])
             ->add('images', CollectionType::class, [
                 'entry_type' => ArticleImageType::class,
