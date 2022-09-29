@@ -1,18 +1,19 @@
 import { debounce } from "lodash";
 
 /**
- * Class filter for search posts in ajax
+ * Class filter for search post in ajax
  *
- * @property {HTMLElement} pagination - The pagination element
- * @property {HTMLElement} content - The content element
- * @property {HTMLElement} sortable - The sortable element
- * @property {HTMLFormElement} form - The form element
+ * @property {HTMLElement} pagination - the pagination element
+ * @property {HTMLElement} content - the pagination element
+ * @property {HTMLElement} sortable - the sortable element
+ * @property {HTMLFormElement} form - the count element
  * @property {HTMLElement} count - The count element
- * @property {number} page - The page number
+ * @property {HTMLElement} page - The page number
+ * @property {bool} moreNav - If the navigation is with button show more
  */
 export default class Filter {
   /**
-   * @param {HTMLElement} element - the parent element of the page of search
+   * @param {HTMLElement} element - the parent element of the page of research
    */
   constructor(element) {
     if (element == null) {
@@ -27,6 +28,7 @@ export default class Filter {
     this.page = parseInt(
       new URLSearchParams(window.location.search).get("page") || 1
     );
+    this.moreNav = this.page == 1;
     this.bindEvents();
   }
 
@@ -34,9 +36,9 @@ export default class Filter {
    * Add actions to the elements
    */
   bindEvents() {
-    /* ACTIONS SUR LES LIENS D'ORDONNANCEMENT */
+    /* Action sur les liens sortable */
     const linkClickListener = (e) => {
-      // Si l'élément est une balise <a></a> OU une balise <i></i>
+      // Si l'element est une balise <a></a> OU <i></i>
       if (e.target.tagName === "A" || e.target.tagName === "I") {
         e.preventDefault();
 
@@ -52,11 +54,20 @@ export default class Filter {
       }
     };
 
+    if (this.moreNav) {
+      this.pagination.innerHTML = `<button class="btn btn-primary mt-2 btn-show-more">Voir Plus</button>`;
+      this.pagination
+        .querySelector("button")
+        .addEventListener("click", this.loadMore.bind(this));
+    } else {
+      this.pagination.addEventListener("click", linkClickListener);
+    }
+
     this.sortable.addEventListener("click", (e) => {
       linkClickListener(e);
     });
 
-    /* ACTIONS SUR LE FORMULAIRE */
+    /* Action sur le formulaire */
     this.form.querySelectorAll('input[type="text"]').forEach((input) => {
       input.addEventListener("keyup", debounce(this.loadForm.bind(this), 400));
     });
@@ -64,6 +75,24 @@ export default class Filter {
     this.form.querySelectorAll('input[type="checkbox"]').forEach((input) => {
       input.addEventListener("change", debounce(this.loadForm.bind(this), 600));
     });
+  }
+
+  /**
+   * Load more elements on the page
+   */
+  async loadMore() {
+    const button = this.pagination.querySelector("button");
+    button.setAttribute("disabled", "disabled");
+
+    this.page++;
+
+    const url = new URL(window.location.href);
+    const params = new URLSearchParams(url.search);
+    params.set("page", this.page);
+
+    await this.loadUrl(url.pathname + "?" + params.toString(), true);
+
+    button.removeAttribute("disabled");
   }
 
   async loadForm() {
@@ -82,35 +111,51 @@ export default class Filter {
     return this.loadUrl(url.pathname + "?" + params.toString());
   }
 
-  async loadUrl(url) {
+  async loadUrl(url, append = false) {
     this.showLoader();
 
     const params = new URLSearchParams(url.split("?")[1] || "");
     params.set("ajax", 1);
 
-    // const response = await fetch(url.split("?")[0] + "?" + params.toString(), {
-    //   headers: {
-    //     "X-Requested-With": "XMLHttpRequest",
-    //   },
-    // });
-
-    const response = await fetch(`${url.split("?")[0]}?${params.toString()}`, {
+    const response = await fetch(url.split("?")[0] + "?" + params.toString(), {
       headers: {
         "X-Requested-With": "XMLHttpRequest",
       },
     });
 
+    // const response = await fetch(`${url.split('?')[0]}?${params.toString()}`, {
+    //     headers: {
+    //         'X-Requested-With': 'XMLHttpRequest',
+    //     }
+    // })
+
     if (response.status >= 200 && response.status < 300) {
       const data = await response.json();
+      console.error(data);
 
-      this.content.innerHTML = data.content;
+      if (append) {
+        this.content.innerHTML += data.content;
+      } else {
+        this.content.innerHTML = data.content;
+      }
+
+      if (!this.moreNav) {
+        this.pagination.innerHTML = data.pagination;
+      } else if (this.page == data.pages) {
+        this.pagination.style.display = "none";
+      } else {
+        this.pagination.style.display = null;
+      }
+
       this.sortable.innerHTML = data.sortable;
       this.count.innerHTML = data.count;
-      this.pagination.innerHTML = data.pagination;
 
-      params.delete("ajax");
-
-      history.replaceState({}, "", url.split("?")[0] + "?" + params.toString());
+      params.delete("ajax"),
+        history.replaceState(
+          {},
+          "",
+          url.split("?")[0] + "?" + params.toString()
+        );
     } else {
       console.error(response);
     }
@@ -119,7 +164,7 @@ export default class Filter {
   }
 
   /**
-   * Function to show the Loader animation
+   * Function to show the loader's animation
    */
   showLoader() {
     this.form.classList.add("is-loading");
@@ -135,7 +180,7 @@ export default class Filter {
   }
 
   /**
-   * Function to hide the Loader animation
+   * Function to hide the loader
    */
   hideLoader() {
     this.form.classList.remove("is-loading");
