@@ -4,13 +4,16 @@ namespace App\Controller\Backend;
 
 use App\Entity\Article;
 use App\Entity\Comment;
+use App\Data\SearchData;
 use App\Form\ArticleType;
+use App\Form\SearchArticleType;
 use App\Repository\ArticleRepository;
 use App\Repository\CommentRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -24,17 +27,43 @@ class ArticleController extends AbstractController
     }
 
     #[Route('', name: 'admin')]
-    public function index(): Response
+    public function index(Request $request): Response
     {
-        //Récupérer tous les Users
-        // $users = $this->repoUser->findAll();
+        $data = new SearchData;
 
-        //Récupérer tous les Articles
-        $articles = $this->repoArticle->findAll();
+        $page = $request->get('page', 1);
+        $data->setPage($page);
 
-        return $this->render('Backend/index.html.twig', [
+        $form = $this->createForm(SearchArticleType::class, $data);
+        $form->handleRequest($request);
+
+        $articles = $this->repoArticle->findSearchData($data, false);
+
+        if ($request->get('ajax')) {
+            return new JsonResponse([
+                'content' => $this->renderView('Components/_articles.html.twig', [
+                    'articles' => $articles,
+                    'admin' => true,
+                ]),
+                'sortable' => $this->renderView('Components/_sortable.html.twig', [
+                    'articles' => $articles,
+                    'admin' => true,
+                ]),
+                'count' => $this->renderView('Components/_count.html.twig', [
+                    'articles' => $articles,
+                    'admin' => true,
+                ]),
+                'pagination' => $this->renderView('Components/_pagination.html.twig', [
+                    'articles' => $articles,
+                    'admin' => true,
+                ]),
+                'pages' => ceil($articles->getTotalItemCount() / $articles->getItemNumberPerPage()),
+            ]);
+        }
+
+        return $this->renderForm('Backend/index.html.twig', [
             'articles' => $articles,
-            // 'users' => $users,
+            'form' => $form,
         ]);
     }
 
@@ -155,5 +184,18 @@ class ArticleController extends AbstractController
         $this->addFlash('error', "Le token n'est pas valide");
 
         return $this->redirectToRoute('admin.article.comments');
+    }
+
+    #[Route('/article/switch/{id}', name: 'admin.article.switch', methods: ['GET'])]
+    public function switchVisibilityArticle(?Article $article): Response
+    {
+        if (!$article instanceof Article) {
+            return new Response('Article non trouvé', 404);
+        }
+
+        $article->setEnable(!$article->isEnable());
+        $this->repoArticle->add($article, true);
+
+        return new Response('Visibilité changé avec succès', 201);
     }
 }

@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
@@ -46,6 +47,16 @@ class SearchArticleType extends AbstractType
                         ->join('u.articles', 'a')
                         ->orderBy('u.nom', 'ASC');
                 },
+                'multiple' => true,
+                'expanded' => true,
+            ])
+            ->add('active', ChoiceType::class, [
+                'label' => false,
+                'required' => false,
+                'choices' => [
+                    'oui' => true,
+                    'non' => false,
+                ],
                 'multiple' => true,
                 'expanded' => true,
             ]);
