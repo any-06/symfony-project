@@ -11,8 +11,14 @@ use App\Repository\ArticleRepository;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ArticleRepository::class)]
+#[UniqueEntity(
+    field: ['titre'],
+    message: 'Ce titre est déjà utilisé par un autre article'
+)]
 class Article
 {
     #[ORM\Id]
@@ -20,10 +26,20 @@ class Article
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string', length: 255, unique: true)]
+    #[Assert\Length(
+        min: 5,
+        minMessage: 'Le titre de l\'article ne peut pas être inférieur à {{ limit }} caractères',
+        max: 255,
+        maxMessage: 'Le titre de l\'article ne peut pas dépasser {{ limit }} caractères',
+    )]
     private $titre;
 
     #[ORM\Column(type: 'text')]
+    #[Assert\Length(
+        min: 10,
+        minMessage: 'Le contenu de l\'article ne peut pas être inférieur à {{ limit }} caractères',
+    )]
     private $content;
 
     #[ORM\Column(type: 'datetime_immutable')]
