@@ -76,27 +76,27 @@ jobs:
 
       # —— Symfony 🎵 ——————————————————————————————————————————————————————————
       - name: Check Symfony requirements
-        run: php vendor/bin/requirements-checker
+        run: vendor/bin/requirements-checker
 
       - name: Check the Symfony console
         run: |
-          php bin/console about
+          bin/console about
 
       ## —— Coding standards ✨ ————————————————————————————————————————————————
       - name: Coding standards checks (php_codesniffer + php-cs-fixer)
-        run: php vendor/bin/php-cs-fixer fix src
+        run: vendor/bin/php-cs-fixer fix src
         if: matrix.php-versions == '8.0'
 
       ## -- Unit Test analysis ✨ —————————————————————————————————————————————————
       - name: PHPUnit test for unit test application
         run: |
-          php bin/console doctrine:database:create --env=test
-          php bin/console doctrine:schema:update --env=test --force 
-          php bin/phpunit --testdox
+          bin/console doctrine:database:create --env=test
+          bin/console doctrine:schema:update --env=test --force 
+          bin/phpunit --testdox
 
       ## —— Static analysis ✨ —————————————————————————————————————————————————
       - name: Static analysis of PHP code (PHPStan) and Twig with Lint
         run: |
-          php bin/console about --env=prod
-          php vendor/bin/phpstan analyse -l 0 src tests
-          php bin/console lint:twig ./templates
+          bin/console about --env=prod
+          vendor/bin/phpstan analyse -l 0 src tests
+          bin/console lint:twig ./templates
