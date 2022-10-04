@@ -76,7 +76,7 @@ jobs:
 
       # —— Symfony 🎵 ——————————————————————————————————————————————————————————
       - name: Check Symfony requirements
-        run: php bin/console vendor/bin/requirements-checker
+        run: php vendor/bin/requirements-checker
 
       - name: Check the Symfony console
         run: |
@@ -84,7 +84,7 @@ jobs:
 
       ## —— Coding standards ✨ ————————————————————————————————————————————————
       - name: Coding standards checks (php_codesniffer + php-cs-fixer)
-        run: php bin/console vendor/bin/php-cs-fixer fix src
+        run: php vendor/bin/php-cs-fixer fix src
         if: matrix.php-versions == '8.0'
 
       ## -- Unit Test analysis ✨ —————————————————————————————————————————————————
@@ -98,5 +98,5 @@ jobs:
       - name: Static analysis of PHP code (PHPStan) and Twig with Lint
         run: |
           php bin/console about --env=prod
-          php bin/console vendor/bin/phpstan analyse -l 0 src tests
+          php vendor/bin/phpstan analyse -l 0 src tests
           php bin/console lint:twig ./templates
