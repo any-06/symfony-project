@@ -3,50 +3,49 @@
 namespace App\Data;
 
 /**
- * Class for the data of search posts
+ * Class for the data of search posts.
  */
 class SearchData
 {
     /**
-     * The number of the page of search
-     * 
-     * @var integer|null
+     * The number of the page of search.
+     *
+     * @var int|null
      */
     private ?int $page = 1;
 
     /**
-     * The content of the query for title posts
+     * The content of the query for title posts.
      *
      * @var string|null
      */
     private ?string $query = '';
 
     /**
-     * Array of tag for the search posts
+     * Array of tag for the search posts.
      *
      * @var array|null
      */
     private ?array $categories = [];
 
     /**
-     * Array of user for the search posts
+     * Array of user for the search posts.
      *
      * @var array|null
      */
     private ?array $auteur = [];
 
     /**
-     * Array of visibility for the search posts
+     * Array of visibility for the search posts.
      *
      * @var array|null
      */
     private ?array $active = [];
 
-
     /**
-     * Get array of author for search posts
+     * Get array of author for search posts.
      *
-     * @return  array|null
+     * @return array|null
      */
     public function getAuteur()
     {
@@ -54,11 +53,11 @@ class SearchData
     }
 
     /**
-     * Set array of author for search posts
+     * Set array of author for search posts.
      *
-     * @param  array|null  $auteur  Array of author for search posts
+     * @param array|null $auteur Array of author for search posts
      *
-     * @return  self
+     * @return self
      */
     public function setAuteur($auteur)
     {
@@ -68,9 +67,9 @@ class SearchData
     }
 
     /**
-     * Get array of tag for the search posts
+     * Get array of tag for the search posts.
      *
-     * @return  array|null
+     * @return array|null
      */
     public function getCategories()
     {
@@ -78,11 +77,11 @@ class SearchData
     }
 
     /**
-     * Set array of tag for the search posts
+     * Set array of tag for the search posts.
      *
-     * @param  array|null  $categorie  Array of tag for the search posts
+     * @param array|null $categorie Array of tag for the search posts
      *
-     * @return  self
+     * @return self
      */
     public function setCategories($categories)
     {
@@ -92,9 +91,9 @@ class SearchData
     }
 
     /**
-     * Get the content of the query for title posts
+     * Get the content of the query for title posts.
      *
-     * @return  string|null
+     * @return string|null
      */
     public function getQuery()
     {
@@ -102,11 +101,11 @@ class SearchData
     }
 
     /**
-     * Set the content of the query for title posts
+     * Set the content of the query for title posts.
      *
-     * @param  string|null  $query  The content of the query for title posts
+     * @param string|null $query The content of the query for title posts
      *
-     * @return  self
+     * @return self
      */
     public function setQuery($query)
     {
@@ -116,9 +115,9 @@ class SearchData
     }
 
     /**
-     * Get the number of the page to search
+     * Get the number of the page to search.
      *
-     * @return  integer|null
+     * @return int|null
      */
     public function getPage()
     {
@@ -126,11 +125,11 @@ class SearchData
     }
 
     /**
-     * Set the number of the page to search
+     * Set the number of the page to search.
      *
-     * @param  integer|null  $page  the number of the page to search
+     * @param int|null $page the number of the page to search
      *
-     * @return  self
+     * @return self
      */
     public function setPage($page)
     {
@@ -140,7 +139,7 @@ class SearchData
     }
 
     /**
-     * Get the value of active
+     * Get the value of active.
      *
      * @return ?array
      */
@@ -150,7 +149,7 @@ class SearchData
     }
 
     /**
-     * Set the value of active
+     * Set the value of active.
      *
      * @param ?array $active
      *

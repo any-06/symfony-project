@@ -5,12 +5,12 @@ namespace App\Controller\Security;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Repository\UserRepository;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Routing\Annotation\Route;
 
 class RegisterController extends AbstractController
 {
@@ -42,7 +42,7 @@ class RegisterController extends AbstractController
         }
 
         return $this->renderForm('Security/register.html.twig', [
-            'form' => $form
+            'form' => $form,
         ]);
     }
 }

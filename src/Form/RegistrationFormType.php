@@ -8,9 +8,9 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 use Vich\UploaderBundle\Form\Type\VichImageType;
@@ -24,13 +24,13 @@ class RegistrationFormType extends AbstractType
                 'required' => false,
                 'download_uri' => false,
                 'image_uri' => true,
-                'label' => 'Image : '
+                'label' => 'Image : ',
             ])
             ->add('username', TextType::class, [
                 'label' => false,
                 'required' => true,
                 'attr' => [
-                    'placeholder' => 'Votre Username'
+                    'placeholder' => 'Votre Username',
                 ],
             ])
             ->add('password', RepeatedType::class, [
@@ -38,22 +38,22 @@ class RegistrationFormType extends AbstractType
                 'first_options' => [
                     'label' => false,
                     'attr' => [
-                        'placeholder' => 'Votre mot de passe'
+                        'placeholder' => 'Votre mot de passe',
                     ],
                     'constraints' => [
                         new NotBlank([
-                            'message' => 'Votre mot de passe ne peut pas être vide'
+                            'message' => 'Votre mot de passe ne peut pas être vide',
                         ]),
                         new Regex([
                             'pattern' => '/^((?=\S*?[A-Z])(?=\S*?[a-z])(?=\S*?[0-9]).{6,})\S$/',
-                            'message' => 'Votre mot de passe doit comporter au moins 6 caractères, une lettre majuscule, une lettre miniscule et 1 chiffre sans espace blanc'
-                        ])
-                    ]
+                            'message' => 'Votre mot de passe doit comporter au moins 6 caractères, une lettre majuscule, une lettre miniscule et 1 chiffre sans espace blanc',
+                        ]),
+                    ],
                 ],
                 'second_options' => [
                     'label' => false,
                     'attr' => [
-                        'placeholder' => 'Répétez votre mot de passe'
+                        'placeholder' => 'Répétez votre mot de passe',
                     ],
                     'invalid_message' => 'Les mots de passe doivent matcher',
                 ],
@@ -62,45 +62,45 @@ class RegistrationFormType extends AbstractType
             ->add('prenom', TextType::class, [
                 'label' => false,
                 'attr' => [
-                    'placeholder' => 'Votre prénom'
+                    'placeholder' => 'Votre prénom',
                 ],
             ])
             ->add('nom', TextType::class, [
                 'label' => false,
                 'attr' => [
-                    'placeholder' => 'Votre nom'
+                    'placeholder' => 'Votre nom',
                 ],
             ])
             ->add('age', NumberType::class, [
                 'label' => false,
                 'attr' => [
-                    'placeholder' => 'Votre âge'
+                    'placeholder' => 'Votre âge',
                 ],
             ])
             ->add('email', EmailType::class, [
                 'label' => false,
                 'attr' => [
-                    'placeholder' => 'Votre email'
+                    'placeholder' => 'Votre email',
                 ],
             ])
             ->add('ville', TextType::class, [
                 'label' => false,
                 'attr' => [
-                    'placeholder' => 'Votre ville'
+                    'placeholder' => 'Votre ville',
                 ],
             ])
             ->add('address', TextType::class, [
                 'required' => false,
                 'label' => false,
                 'attr' => [
-                    'placeholder' => 'Votre adresse'
+                    'placeholder' => 'Votre adresse',
                 ],
             ])
             ->add('zipCode', TextType::class, [
                 'required' => false,
                 'label' => false,
                 'attr' => [
-                    'placeholder' => 'Code postal'
+                    'placeholder' => 'Code postal',
                 ],
             ]);
     }

@@ -2,16 +2,16 @@
 
 namespace App\Form;
 
-use App\Entity\User;
 use App\Data\SearchData;
 use App\Entity\Categorie;
+use App\Entity\User;
 use Doctrine\ORM\EntityRepository;
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SearchArticleType extends AbstractType
 {
@@ -22,8 +22,8 @@ class SearchArticleType extends AbstractType
                 'label' => false,
                 'required' => false,
                 'attr' => [
-                    'placeholder' => 'Rechercher'
-                ]
+                    'placeholder' => 'Rechercher',
+                ],
             ])
             ->add('categories', EntityType::class, [
                 'label' => false,
@@ -68,7 +68,6 @@ class SearchArticleType extends AbstractType
             'data_class' => SearchData::class,
             'method' => 'GET',
             'csrf_protection' => false,
-
         ]);
     }
 

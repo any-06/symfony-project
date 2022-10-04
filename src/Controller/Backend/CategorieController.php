@@ -61,7 +61,7 @@ class CategorieController extends AbstractController
     #[Route('/{id}', name: 'app_categorie_delete', methods: ['POST'])]
     public function delete(Request $request, Categorie $categorie, CategorieRepository $categorieRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $categorie->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$categorie->getId(), $request->request->get('_token'))) {
             $categorieRepository->remove($categorie, true);
         }
 
@@ -73,11 +73,10 @@ class CategorieController extends AbstractController
     {
         if (!$categorie instanceof Categorie) {
             return new Response('Catégorie non trouvée', 404);
-        } else {
-            $categorie->isEnable() ? $categorie->setEnable(false) : $categorie->setEnable(true);
-            $categorieRepository->add($categorie, true);
-
-            return new Response('Visibility changed', 201);
         }
+        $categorie->isEnable() ? $categorie->setEnable(false) : $categorie->setEnable(true);
+        $categorieRepository->add($categorie, true);
+
+        return new Response('Visibility changed', 201);
     }
 }

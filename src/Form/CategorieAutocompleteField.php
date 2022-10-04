@@ -24,8 +24,8 @@ class CategorieAutocompleteField extends AbstractType
                     ->andWhere('c.enable = true')
                     ->orderBy('c.titre', 'ASC');
             },
-            'by_reference' => false
-            //'security' => 'ROLE_SOMETHING',
+            'by_reference' => false,
+            // 'security' => 'ROLE_SOMETHING',
         ]);
     }
 

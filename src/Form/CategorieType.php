@@ -19,11 +19,11 @@ class CategorieType extends AbstractType
                 'required' => true,
                 'attr' => [
                     'placeholder' => 'Titre de la catégorie',
-                ]
+                ],
             ])
             ->add('enable', CheckboxType::class, [
                 'label' => 'Active',
-                'required' => false
+                'required' => false,
             ]);
     }
 

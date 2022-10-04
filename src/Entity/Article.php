@@ -2,21 +2,17 @@
 
 namespace App\Entity;
 
-use App\Entity\User;
-use App\Entity\Comment;
-use App\Entity\Categorie;
-use App\Entity\ArticleImage;
-use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ArticleRepository;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ArticleRepository::class)]
 #[UniqueEntity(
-    field: ['titre'],
+    fields: ['titre'],
     message: 'Ce titre est déjà utilisé par un autre article'
 )]
 class Article

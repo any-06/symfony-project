@@ -5,18 +5,18 @@ namespace App\Controller\Backend;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/admin/user')]
 class UserController extends AbstractController
 {
     /**
-     * Constrtucteur of UserController
-     * 
+     * Constrtucteur of UserController.
+     *
      * @param UserRepository $repoUser
      */
     public function __construct(
@@ -27,7 +27,7 @@ class UserController extends AbstractController
     #[Route('', name: 'admin.user.index')]
     public function indexUser(): Response
     {
-        //Récupérer tous les Users
+        // Récupérer tous les Users
         $users = $this->repoUser->findAll();
 
         return $this->render('Backend/User/index.html.twig', [
@@ -56,7 +56,7 @@ class UserController extends AbstractController
 
         return $this->renderForm('Backend/User/edit.html.twig', [
             'form' => $form,
-            'user' => $user
+            'user' => $user,
         ]);
     }
 
@@ -69,12 +69,14 @@ class UserController extends AbstractController
             return $this->redirectToRoute('admin.user.index');
         }
 
-        if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->get('_token'))) {
             $this->repoUser->remove($user, true);
 
             $this->addFlash('success', 'Utilisateur supprimé avec succès');
 
             return $this->redirectToRoute('admin.user.index');
         }
+
+        return $this->redirectToRoute('admin.user.index');
     }
 }
